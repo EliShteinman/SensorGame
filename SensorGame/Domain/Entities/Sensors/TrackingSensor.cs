@@ -1,5 +1,6 @@
 using SensorGame.Domain.Enum;
-namespace SensorGame.Domain.Entities;
+using SensorGame.Domain.Interfaces;
+namespace SensorGame.Domain.Entities.Sensors;
 
 public abstract class TrackingSensor : Isensor
 {

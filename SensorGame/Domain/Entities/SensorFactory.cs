@@ -1,5 +1,7 @@
-using SensorGame.Domain.Entities.TrackingSensors;
+using SensorGame.Domain.Entities.Sensors.InterrogationSensors;
+using SensorGame.Domain.Entities.Sensors.TrackingSensors;
 using SensorGame.Domain.Enum;
+using SensorGame.Domain.Interfaces;
 namespace SensorGame.Domain.Entities;
 
 public static class SensorFactory

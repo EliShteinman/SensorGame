@@ -1,5 +1,5 @@
 using SensorGame.Domain.Enum;
-namespace SensorGame.Domain.Entities.TrackingSensors;
+namespace SensorGame.Domain.Entities.Sensors.TrackingSensors;
 
 public class AudioSensor : TrackingSensor
 {

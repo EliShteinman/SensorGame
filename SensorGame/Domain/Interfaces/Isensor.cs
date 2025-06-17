@@ -1,5 +1,5 @@
 using SensorGame.Domain.Enum;
-namespace SensorGame.Domain.Entities;
+namespace SensorGame.Domain.Interfaces;
 
 public interface Isensor
 {

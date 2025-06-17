@@ -1,4 +1,6 @@
+using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Enum;
+using SensorGame.Domain.Interfaces;
 namespace SensorGame.Domain.Entities;
 
 public abstract class IranAgent
