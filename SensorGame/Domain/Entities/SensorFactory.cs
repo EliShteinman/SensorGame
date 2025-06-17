@@ -10,7 +10,7 @@ public static class SensorFactory
 	private static readonly Random Random = new();
 	private static readonly SensorType[] TrackingTypes = [SensorType.Audio, SensorType.Pulse, SensorType.Thermal];
 	private static readonly SensorType[] InterrogationTypes = [SensorType.Motion, SensorType.Signal, SensorType.Magnetic, SensorType.Light];
-	
+
 	public static TrackingSensor[] CreateRandomWeaknessSensors(int count)
 	{
 		var sensors = new TrackingSensor[count];

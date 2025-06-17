@@ -6,7 +6,7 @@ namespace SensorGame.Domain.Entities;
 
 public abstract class IranAgent
 {
-	protected readonly TrackingSensor[] AttachedSensors;
+	protected readonly Isensor[] AttachedSensors;
 	protected readonly TrackingSensor[] Weaknesses;
 
 	protected IranAgent(TrackingSensor[] weaknesses)
@@ -16,6 +16,24 @@ public abstract class IranAgent
 	}
 	public abstract AgentRank Rank { get; }
 	public bool IsExposed => false;
-	public abstract InvestigationAggregateResult Investigate();
-	public abstract string AttachSensor(Isensor sensor, int? Location);
+	protected abstract InvestigationAggregateResult Investigate();
+	public virtual InvestigationAggregateResult AttachSensor(Isensor sensor, int Location)
+	{
+		switch (sensor)
+		{
+			case TrackingSensor track:
+				if (Location < 0 || Location >= AttachedSensors.Length)
+				{
+					throw new ArgumentException("Invalid sensor location");
+				}
+				AttachedSensors[Location] = track;
+				break;
+			case InterrogationSensor interrogation:
+				AttachedSensors[Location] = interrogation;
+				break;
+			default:
+				throw new ArgumentException("Invalid sensor type");
+		}
+		return Investigate();
+	}
 }

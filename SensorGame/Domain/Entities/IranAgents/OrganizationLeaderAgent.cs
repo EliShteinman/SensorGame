@@ -1,6 +1,5 @@
 using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Enum;
-using SensorGame.Domain.Interfaces;
 using SensorGame.Domain.Models;
 namespace SensorGame.Domain.Entities.IranAgents;
 
@@ -12,11 +11,7 @@ public class OrganizationLeaderAgent : IranAgent
 	}
 	public override AgentRank Rank => AgentRank.OrganizationLeader;
 
-	public override InvestigationAggregateResult Investigate()
-	{
-		throw new NotImplementedException();
-	}
-	public override string AttachSensor(Isensor sensor, int? Location)
+	protected override InvestigationAggregateResult Investigate()
 	{
 		throw new NotImplementedException();
 	}
