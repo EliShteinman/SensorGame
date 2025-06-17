@@ -2,15 +2,13 @@ using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Enum;
 using SensorGame.Domain.Interfaces;
 using SensorGame.Domain.Models;
-
 namespace SensorGame.Domain.Entities.IranAgents;
 
 public class OrganizationLeaderAgent : IranAgent
 {
 	public OrganizationLeaderAgent()
+			: base(SensorFactory.CreateRandomWeaknessSensors(8))
 	{
-		Weaknesses = new TrackingSensor[8];
-		AttachedSensors = new TrackingSensor[Weaknesses.Length];
 	}
 	public override AgentRank Rank => AgentRank.OrganizationLeader;
 

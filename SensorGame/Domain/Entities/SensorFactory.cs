@@ -1,3 +1,4 @@
+using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Entities.Sensors.InterrogationSensors;
 using SensorGame.Domain.Entities.Sensors.TrackingSensors;
 using SensorGame.Domain.Enum;
@@ -7,45 +8,54 @@ namespace SensorGame.Domain.Entities;
 public static class SensorFactory
 {
 	private static readonly Random Random = new();
-	public static Isensor[] CreateRandomWeaknessSensors(int count)
+	private static readonly SensorType[] TrackingTypes = [SensorType.Audio, SensorType.Pulse, SensorType.Thermal];
+	private static readonly SensorType[] InterrogationTypes = [SensorType.Motion, SensorType.Signal, SensorType.Magnetic, SensorType.Light];
+	
+	public static TrackingSensor[] CreateRandomWeaknessSensors(int count)
 	{
-		List<SensorType> types = [SensorType.Audio, SensorType.Pulse, SensorType.Thermal];
-		var sensors = new Isensor[count];
+		var sensors = new TrackingSensor[count];
 		for (var i = 0; i < count; i++)
 		{
-			sensors[i] = CreateSensorByType(types[Random.Next(0, types.Count)]);
+			var type = TrackingTypes[Random.Next(0, TrackingTypes.Length)];
+			sensors[i] = CreateTrackingSensorByType(type);
 		}
 		return sensors;
 	}
-	public static Isensor CreateSensorByType(SensorType type)
+	private static TrackingSensor CreateTrackingSensorByType(SensorType type)
 	{
-		Isensor sensor = null;
 		switch (type)
 		{
 			case SensorType.Audio:
-				sensor = new AudioSensor();
-				break;
+				return new AudioSensor();
 			case SensorType.Pulse:
-				sensor = new PulseSensor();
-				break;
+				return new PulseSensor();
 			case SensorType.Thermal:
-				sensor = new ThermalSensor();
-				break;
-			case SensorType.Motion:
-				sensor = new MotionSensor();
-				break;
-			case SensorType.Signal:
-				sensor = new SignalSensor();
-				break;
-			case SensorType.Magnetic:
-				sensor = new MagneticSensor();
-				break;
-			case SensorType.Light:
-				sensor = new LightSensor();
-				break;
+				return new ThermalSensor();
 			default:
 				throw new ArgumentException("Invalid sensor type");
 		}
-		return sensor;
+	}
+
+	private static InterrogationSensor CreateInterrogationSensorByType(SensorType type)
+	{
+		switch (type)
+		{
+			case SensorType.Motion:
+				return new MotionSensor();
+			case SensorType.Signal:
+				return new SignalSensor();
+			case SensorType.Magnetic:
+				return new MagneticSensor();
+			case SensorType.Light:
+				return new LightSensor();
+			default:
+				throw new ArgumentException("Invalid sensor type");
+		}
+	}
+	public static Isensor CreateSensorByType(SensorType type)
+	{
+		if (TrackingTypes.Contains(type)) return CreateTrackingSensorByType(type);
+		if (InterrogationTypes.Contains(type)) return CreateInterrogationSensorByType(type);
+		throw new ArgumentException("Invalid sensor type");
 	}
 }

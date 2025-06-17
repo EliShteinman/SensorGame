@@ -6,9 +6,15 @@ namespace SensorGame.Domain.Entities;
 
 public abstract class IranAgent
 {
+	protected readonly TrackingSensor[] AttachedSensors;
+	protected readonly TrackingSensor[] Weaknesses;
+
+	protected IranAgent(TrackingSensor[] weaknesses)
+	{
+		Weaknesses = weaknesses;
+		AttachedSensors = new TrackingSensor[weaknesses.Length];
+	}
 	public abstract AgentRank Rank { get; }
-	protected TrackingSensor[] Weaknesses;
-	protected TrackingSensor[] AttachedSensors;
 	public bool IsExposed => false;
 	public abstract InvestigationAggregateResult Investigate();
 	public abstract string AttachSensor(Isensor sensor, int? Location);

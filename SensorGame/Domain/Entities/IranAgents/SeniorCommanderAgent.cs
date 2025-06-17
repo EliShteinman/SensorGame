@@ -2,15 +2,13 @@ using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Enum;
 using SensorGame.Domain.Interfaces;
 using SensorGame.Domain.Models;
-
 namespace SensorGame.Domain.Entities.IranAgents;
 
 public class SeniorCommanderAgent : IranAgent
 {
 	public SeniorCommanderAgent()
+		: base(SensorFactory.CreateRandomWeaknessSensors(6))
 	{
-		Weaknesses = new TrackingSensor[6];
-		AttachedSensors = new TrackingSensor[Weaknesses.Length];
 	}
 	public override AgentRank Rank => AgentRank.SeniorCommander;
 
@@ -22,5 +20,4 @@ public class SeniorCommanderAgent : IranAgent
 	{
 		throw new NotImplementedException();
 	}
-	
 }

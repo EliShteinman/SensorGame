@@ -1,4 +1,3 @@
-using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Enum;
 using SensorGame.Domain.Interfaces;
 using SensorGame.Domain.Models;
@@ -6,10 +5,9 @@ namespace SensorGame.Domain.Entities.IranAgents;
 
 public class FootSoldierAgent : IranAgent
 {
-	public FootSoldierAgent()
+	public FootSoldierAgent() :
+			base(SensorFactory.CreateRandomWeaknessSensors(2))
 	{
-		Weaknesses = new TrackingSensor[2];
-		AttachedSensors = new TrackingSensor[Weaknesses.Length];
 	}
 	public override AgentRank Rank => AgentRank.FootSoldier;
 
