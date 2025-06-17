@@ -1,4 +1,5 @@
 using SensorGame.Domain.Entities.TrackingSensors;
+using SensorGame.Domain.Enum;
 namespace SensorGame.Domain.Entities;
 
 public static class SensorFactory
@@ -14,7 +15,7 @@ public static class SensorFactory
 			new MotionSensor(),
 			new SignalSensor(),
 			new MagneticSensor(),
-			new LightSensor(),
+			new LightSensor()
 		];
 	}
 
@@ -25,7 +26,7 @@ public static class SensorFactory
 			new MotionSensor(),
 			new SignalSensor(),
 			new MagneticSensor(),
-			new LightSensor(),
+			new LightSensor()
 		];
 	}
 
@@ -35,14 +36,14 @@ public static class SensorFactory
 		[
 			new AudioSensor(),
 			new PulseSensor(),
-			new ThermalSensor(),
+			new ThermalSensor()
 		];
 	}
 	public static Isensor[] CreateRandomWeaknessSensors(int count)
 	{
 		var baseOptions = CreateWeaknessSensors();
 		var result = new List<Isensor>();
-		for (int i = 0; i < count; i++)
+		for (var i = 0; i < count; i++)
 		{
 			var randomIndex = Random.Next(0, baseOptions.Length);
 			result.Add(baseOptions[randomIndex]);
@@ -50,30 +51,30 @@ public static class SensorFactory
 		return result.ToArray();
 	}
 
-	public static Isensor CreateSensorByType(string type)
+	public static Isensor CreateSensorByType(SensorType type)
 	{
 		Isensor sensor = null;
 		switch (type)
 		{
-			case "Audio":
+			case SensorType.Audio:
 				sensor = new AudioSensor();
 				break;
-			case "Pulse":
+			case SensorType.Pulse:
 				sensor = new PulseSensor();
 				break;
-			case "Thermal":
+			case SensorType.Thermal:
 				sensor = new ThermalSensor();
 				break;
-			case "Motion":
+			case SensorType.Motion:
 				sensor = new MotionSensor();
 				break;
-			case "Signal":
+			case SensorType.Signal:
 				sensor = new SignalSensor();
 				break;
-			case "Magnetic":
+			case SensorType.Magnetic:
 				sensor = new MagneticSensor();
 				break;
-			case "Light":
+			case SensorType.Light:
 				sensor = new LightSensor();
 				break;
 			default:

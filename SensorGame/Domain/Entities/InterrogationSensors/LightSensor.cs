@@ -1,12 +1,14 @@
+using SensorGame.Domain.Enum;
 namespace SensorGame.Domain.Entities.TrackingSensors;
 
 public class LightSensor : InterrogationSensor
 {
 	public LightSensor()
 	{
-		Name = "Light";
+		Name = SensorType.Light;
 	}
-	public override string Name { get; protected set; }
+	public override SensorType Name { get; protected set; }
 	public override void Activate()
-	{}
+	{
+	}
 }

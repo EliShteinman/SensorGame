@@ -1,12 +1,14 @@
+using SensorGame.Domain.Enum;
 namespace SensorGame.Domain.Entities.TrackingSensors;
 
 public class MagneticSensor : InterrogationSensor
 {
 	public MagneticSensor()
 	{
-		Name = "Magnetic";
+		Name = SensorType.Magnetic;
 	}
-	public override string Name { get; protected set; }
+	public override SensorType Name { get; protected set; }
 	public override void Activate()
-	{}
+	{
+	}
 }
