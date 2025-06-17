@@ -1,4 +1,5 @@
 using SensorGame.Domain.Enum;
+using SensorGame.Domain.Models;
 namespace SensorGame.Domain.Entities.Sensors.TrackingSensors;
 
 public class AudioSensor : TrackingSensor
@@ -8,8 +9,8 @@ public class AudioSensor : TrackingSensor
 		Name = SensorType.Audio;
 	}
 	public override SensorType Name { get; protected set; }
-	public override void Activate()
+	public override SensorExecutionResult Activate(IranAgent agent)
 	{
-
+		throw new NotImplementedException();
 	}
 }

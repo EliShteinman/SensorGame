@@ -1,4 +1,6 @@
 using SensorGame.Domain.Enum;
+using SensorGame.Domain.Entities;
+using SensorGame.Domain.Models;
 namespace SensorGame.Domain.Interfaces;
 
 public interface Isensor
@@ -7,5 +9,5 @@ public interface Isensor
 	public string Type { get; }
 	
 	public bool IsBroken { get; }
-	public void Activate();
+	public SensorExecutionResult Activate(IranAgent agent);
 }

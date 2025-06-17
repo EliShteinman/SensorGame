@@ -1,6 +1,7 @@
 using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Enum;
 using SensorGame.Domain.Interfaces;
+using SensorGame.Domain.Models;
 namespace SensorGame.Domain.Entities.IranAgents;
 
 public class FootSoldierAgent : IranAgent
@@ -12,7 +13,7 @@ public class FootSoldierAgent : IranAgent
 	}
 	public override AgentRank Rank => AgentRank.FootSoldier;
 
-	public override string Investigate()
+	public override InvestigationAggregateResult Investigate()
 	{
 		throw new NotImplementedException();
 	}
