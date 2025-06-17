@@ -5,52 +5,16 @@ namespace SensorGame.Domain.Entities;
 public static class SensorFactory
 {
 	private static readonly Random Random = new();
-	public static Isensor[] CreateAllSensors()
-	{
-		return
-		[
-			new AudioSensor(),
-			new PulseSensor(),
-			new ThermalSensor(),
-			new MotionSensor(),
-			new SignalSensor(),
-			new MagneticSensor(),
-			new LightSensor()
-		];
-	}
-
-	public static Isensor[] CreateInvestigatorSensors()
-	{
-		return
-		[
-			new MotionSensor(),
-			new SignalSensor(),
-			new MagneticSensor(),
-			new LightSensor()
-		];
-	}
-
-	public static Isensor[] CreateWeaknessSensors()
-	{
-		return
-		[
-			new AudioSensor(),
-			new PulseSensor(),
-			new ThermalSensor()
-		];
-	}
 	public static Isensor[] CreateRandomWeaknessSensors(int count)
 	{
-		var baseOptions = CreateWeaknessSensors();
-		var result = new List<Isensor>();
+		List<SensorType> types = [SensorType.Audio, SensorType.Pulse, SensorType.Thermal];
+		var sensors = new Isensor[count];
 		for (var i = 0; i < count; i++)
 		{
-			var randomIndex = Random.Next(0, baseOptions.Length);
-			result.Add(baseOptions[randomIndex]);
+			sensors[i] = CreateSensorByType(types[Random.Next(0, types.Count)]);
 		}
-		return result.ToArray();
+		return sensors;
 	}
-
 	public static Isensor CreateSensorByType(SensorType type)
 	{
 		Isensor sensor = null;

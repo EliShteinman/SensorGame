@@ -4,6 +4,7 @@ namespace SensorGame.Domain.Entities;
 public abstract class InterrogationSensor : Isensor
 {
 	public abstract SensorType Name { get; protected set; }
+	public bool IsBroken => false;
 	public string Type => "Interrogation";
 	public abstract void Activate();
 }
