@@ -1,5 +1,6 @@
 ﻿using SensorGame.Domain.Entities;
 using SensorGame.Domain.Enum;
+using SensorGame.Logic;
 using SensorGame.Utils;
 namespace SensorGame;
 
@@ -10,64 +11,49 @@ class Program
 		while (true)
 		{
 			var numberOfTeachings = 0;
-			var agent = AgentFactory.CreateAgentByType(AgentRank.FootSoldier);
+			var promptSoldier = """
+			                    Choose an agent type to investigate:
+			                    1.	Foot Soldier
+			                    2.	Squad Leader
+			                    3.	Senior Commander
+			                    4.	[Not available] Organization Leader
+			                    5.	Exit
+			                    """;
+			var minSoldier = 1;
+			var maxSoldier = 5;
+			var inputSoldier = ConsoleUtils.GetChoice(promptSoldier, minSoldier, maxSoldier);
+			AgentRank rank;
+			switch (inputSoldier)
+			{
+				case 1:
+					rank = AgentRank.FootSoldier;
+					break;
+				case 2:
+					rank = AgentRank.SquadLeader;
+					break;
+				case 3:
+					rank = AgentRank.SeniorCommander;
+					break;
+				case 4:
+					throw new NotImplementedException();
+				case 5:
+					return;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+			var agent = AgentFactory.CreateAgentByType(rank);
 			while (!agent.IsExposed)
 			{
 				switch (agent.Rank)
 				{
 					case AgentRank.FootSoldier:
-						var prompt = """
-						             Choose a Sensor from the list.
-						             1. Audio.
-						             2. Pulse.
-						             3. Thermal.
-						             4. Magnatic.
-						             5. Exit.
-						             """;
-						var min = 1;
-						var max = 5;
-						ConsoleUtils.Clear();
-						var inputSensor = ConsoleUtils.GetChoice(prompt, min, max);
-						SensorType sensorType;
-						switch (inputSensor)
-						{
-							case 1:
-								sensorType = SensorType.Audio;
-								break;
-							case 2:
-								sensorType = SensorType.Pulse;
-								break;
-							case 3:
-								sensorType = SensorType.Thermal;
-								break;
-							case 4:
-								sensorType = SensorType.Magnetic;
-								break;
-							case 5:
-								return;
-							default:
-								throw new ArgumentOutOfRangeException();
-						}
-						var promptLocation = "Choose a location";
-						var minLocation = 0;
-						var maxLocation = 1;
-						var location = ConsoleUtils.GetChoice(promptLocation, minLocation, maxLocation);
-						var sensor = SensorFactory.CreateSensorByType(sensorType);
-						var result = agent.AttachSensor(sensor, location);
-						ConsoleUtils.WriteLine(
-							$"""
-							Rank = {result.AgentRank} 
-							Exposed {result.CorrectMatches}
-							From {result.TotalWeaknesses} weaknesses.
-							
-							Press any key to continue.
-							"""
-						);
-						Console.ReadKey(true);
+						FootSolider.Run(agent);
 						break;
 					case AgentRank.SquadLeader:
+						SquadLeader.Run(agent);
 						break;
 					case AgentRank.SeniorCommander:
+						SeniorCommander.Run(agent);
 						break;
 					case AgentRank.OrganizationLeader:
 						break;
