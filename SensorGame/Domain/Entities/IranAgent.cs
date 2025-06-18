@@ -17,8 +17,49 @@ public abstract class IranAgent
 	public abstract AgentRank Rank { get; }
 	public bool IsExposed { get; protected set; }
 	protected abstract InvestigationAggregateResult Investigate();
+	
+	protected List<SensorActiveResult> CollectSensorResults()
+	{
+		var results = new List<SensorActiveResult>();
+		for (var i = 0; i < AttachedSensors.Length; i++)
+		{
+			if (AttachedSensors[i] == null)
+			{
+				continue;
+			}
+			var result = AttachedSensors[i].Activate();
+			result.SlotIndex = i;
+			results.Add(result);
+		}
+		return results;
+	}
+	protected InvestigationAggregateResult AnalyzeSensorResults(List<SensorActiveResult> toAnalyze)
+	{
+		var brokenCount = 0;
+		var copyWeaknesses = Weaknesses.ToList();
+		foreach (var result in toAnalyze)
+		{
+			if (result.WasBroken)
+			{
+				brokenCount++;
+			}
+			else
+			{
+				copyWeaknesses.Remove(result.Type);
+			}
+		}	
+		IsExposed = (copyWeaknesses.Count == 0);
+		return new InvestigationAggregateResult
+		{
+			AgentRank = Rank,
+			CorrectMatches = (Weaknesses.Length - copyWeaknesses.Count),
+			TotalWeaknesses = Weaknesses.Length,
+			InternalSensorResults = toAnalyze,
+			BrokenCount = brokenCount
+		};
+	}
 
-	public virtual InvestigationAggregateResult AttachSensor(Sensor sensor, int Location)
+public virtual InvestigationAggregateResult AttachSensor(Sensor sensor, int Location)
 	{
 		if (Location < 0 || Location >= AttachedSensors.Length)
 		{

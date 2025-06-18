@@ -6,9 +6,33 @@ public class SeniorCommanderAgent : IranAgent
 {
 	private readonly Random Random = new();
 	private int CounterOfInvestigations = 0;
-	private void Remove1Sensor()
+	private void TryRemove1Sensor(int count, List<SensorActiveResult> result)
 	{
-		AttachedSensors[Random.Next(0, AttachedSensors.Length)] = null;
+		foreach (var sensorActiveResult in result)
+		{
+			if (sensorActiveResult.Type == SensorType.Magnetic)
+			{
+				return;
+			}
+		}
+		for (var i = 0; i < count; i++)
+		{
+			var removed = Random.Next(0, AttachedSensors.Length);
+			AttachedSensors[removed] = null;
+			SensorActiveResult toDelete = null;
+			foreach (var sensorActiveResult in result)
+			{
+				if (sensorActiveResult.SlotIndex == removed)
+				{
+					toDelete = sensorActiveResult;
+					break;
+				}
+			}
+			if (toDelete != null)
+			{
+				result.Remove(toDelete);
+			}
+		}
 	}
 	public SeniorCommanderAgent()
 			: base(WeaknessesFactory.CreateRandomWeakness(6))
@@ -18,40 +42,12 @@ public class SeniorCommanderAgent : IranAgent
 
 	protected override InvestigationAggregateResult Investigate()
 	{
+		var result = CollectSensorResults();
 		CounterOfInvestigations++;
 		if (CounterOfInvestigations % 3 == 0)
 		{
-			Remove1Sensor();
-			Remove1Sensor();
+			TryRemove1Sensor(2, result);
 		}
-		var brokenCount = 0;
-		var results = new List<SensorActiveResult>();
-		var copyWeaknesses = Weaknesses.ToList();
-		foreach (var sensor in AttachedSensors)
-		{
-			if (sensor == null)
-			{
-				continue;
-			}
-			var result = sensor.Activate();
-			if (result.WasBroken)
-			{
-				brokenCount++;
-			}
-			else
-			{
-				copyWeaknesses.Remove(result.Type);
-			} 
-			results.Add(result);
-		}
-		IsExposed = (copyWeaknesses.Count == 0);
-		return new InvestigationAggregateResult
-		{
-			AgentRank = Rank,
-			CorrectMatches = (Weaknesses.Length - copyWeaknesses.Count),
-			TotalWeaknesses = Weaknesses.Length,
-			InternalSensorResults = results,
-			BrokenCount = brokenCount
-		};
+		return AnalyzeSensorResults(result);
 	}
 }
