@@ -1,4 +1,4 @@
-namespace SensorGame.GameLogic;
+namespace SensorGame.Logic;
 
 public class GameState
 {

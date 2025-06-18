@@ -13,11 +13,27 @@ public abstract class IranAgent
 	{
 		Weaknesses = weaknesses;
 		AttachedSensors = new TrackingSensor[weaknesses.Length];
+		IsExposed = false;
 	}
 	public abstract AgentRank Rank { get; }
-	public bool IsExposed => false;
-	protected abstract InvestigationAggregateResult Investigate();
-	public virtual InvestigationAggregateResult AttachSensor(Isensor sensor, int Location)
+	public bool IsExposed {get; private set;}
+	protected virtual int Investigate()
+	{
+		var exposed = 0;
+		for (var i = 0; i < Weaknesses.Length; i++)
+		{
+			if (Weaknesses[i] == AttachedSensors[i])
+			{
+				exposed++;
+			}
+		}
+		if (exposed == Weaknesses.Length)
+		{
+			IsExposed = true;
+		}
+		return exposed;
+	}
+	public virtual int AttachSensor(Isensor sensor, int Location)
 	{
 		switch (sensor)
 		{
