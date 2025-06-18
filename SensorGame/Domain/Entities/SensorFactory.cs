@@ -23,7 +23,7 @@ public static class SensorFactory
 			case SensorType.Thermal:
 				return new ThermalSensor();
 			default:
-				throw new ArgumentException("Invalid Sensor type");
+				throw new ArgumentException("Invalid sensor type");
 		}
 	}
 
@@ -38,13 +38,13 @@ public static class SensorFactory
 			case SensorType.Light:
 				return new LightSensor();
 			default:
-				throw new ArgumentException("Invalid Sensor type");
+				throw new ArgumentException("Invalid sensor type");
 		}
 	}
 	public static Sensor CreateSensorByType(SensorType type)
 	{
 		if (TrackingTypes.Contains(type)) return CreateTrackingSensorByType(type);
 		if (InterrogationTypes.Contains(type)) return CreateInterrogationSensorByType(type);
-		throw new ArgumentException("Invalid Sensor type");
+		throw new ArgumentException("Invalid sensor type");
 	}
 }
