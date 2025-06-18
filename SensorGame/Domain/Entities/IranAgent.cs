@@ -59,13 +59,13 @@ public abstract class IranAgent
 		};
 	}
 
-public virtual InvestigationAggregateResult AttachSensor(Sensor sensor, int Location)
+public virtual InvestigationAggregateResult AttachSensor(Sensor sensor, int location)
 	{
-		if (Location < 0 || Location >= AttachedSensors.Length)
+		if (location < 0 || location >= AttachedSensors.Length)
 		{
 			throw new ArgumentException("Invalid Sensor location");
 		}
-		AttachedSensors[Location] = sensor;
+		AttachedSensors[location] = sensor;
 		return Investigate();
 	}
 }

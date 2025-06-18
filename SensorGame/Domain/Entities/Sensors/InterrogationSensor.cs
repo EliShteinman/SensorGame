@@ -4,5 +4,5 @@ namespace SensorGame.Domain.Entities.Sensors;
 
 public abstract class InterrogationSensor : Sensor
 {
-	public string For => "Interrogation";
+	public string Category => "Interrogation";
 }

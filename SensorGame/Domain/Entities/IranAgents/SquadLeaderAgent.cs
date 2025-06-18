@@ -6,7 +6,7 @@ public class SquadLeaderAgent : IranAgent
 {
 	private readonly Random Random = new();
 	private int CounterOfInvestigations = 0;
-	private void TryRemove1Sensor(int count, List<SensorActiveResult> result)
+	private void TryRemoveRandomSensors(int count, List<SensorActiveResult> result)
 	{
 		foreach (var sensorActiveResult in result)
 		{
@@ -46,7 +46,7 @@ public class SquadLeaderAgent : IranAgent
 		CounterOfInvestigations++;
 		if (CounterOfInvestigations % 3 == 0)
 		{
-			TryRemove1Sensor(1, result);
+			TryRemoveRandomSensors(1, result);
 		}
 		return AnalyzeSensorResults(result);
 	}
