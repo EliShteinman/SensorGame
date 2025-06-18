@@ -1,55 +1,30 @@
 using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Enum;
-using SensorGame.Domain.Interfaces;
 using SensorGame.Domain.Models;
 namespace SensorGame.Domain.Entities;
 
 public abstract class IranAgent
 {
-	protected readonly Isensor[] AttachedSensors;
-	protected readonly TrackingSensor[] Weaknesses;
+	protected readonly Sensor[] AttachedSensors;
+	protected readonly SensorType[] Weaknesses;
 
-	protected IranAgent(TrackingSensor[] weaknesses)
+	protected IranAgent(SensorType[] weaknesses)
 	{
 		Weaknesses = weaknesses;
-		AttachedSensors = new TrackingSensor[weaknesses.Length];
+		AttachedSensors = new Sensor[weaknesses.Length];
 		IsExposed = false;
 	}
 	public abstract AgentRank Rank { get; }
-	public bool IsExposed {get; private set;}
-	protected virtual int Investigate()
+	public bool IsExposed { get; protected set; }
+	protected abstract InvestigationAggregateResult Investigate();
+
+	public virtual InvestigationAggregateResult AttachSensor(Sensor sensor, int Location)
 	{
-		var exposed = 0;
-		for (var i = 0; i < Weaknesses.Length; i++)
+		if (Location < 0 || Location >= AttachedSensors.Length)
 		{
-			if (Weaknesses[i] == AttachedSensors[i])
-			{
-				exposed++;
-			}
+			throw new ArgumentException("Invalid Sensor location");
 		}
-		if (exposed == Weaknesses.Length)
-		{
-			IsExposed = true;
-		}
-		return exposed;
-	}
-	public virtual int AttachSensor(Isensor sensor, int Location)
-	{
-		switch (sensor)
-		{
-			case TrackingSensor track:
-				if (Location < 0 || Location >= AttachedSensors.Length)
-				{
-					throw new ArgumentException("Invalid sensor location");
-				}
-				AttachedSensors[Location] = track;
-				break;
-			case InterrogationSensor interrogation:
-				AttachedSensors[Location] = interrogation;
-				break;
-			default:
-				throw new ArgumentException("Invalid sensor type");
-		}
+		AttachedSensors[Location] = sensor;
 		return Investigate();
 	}
 }

@@ -6,11 +6,15 @@ public class AudioSensor : TrackingSensor
 {
 	public AudioSensor()
 	{
-		Name = SensorType.Audio;
+		IsBroken = false;
+		Type = SensorType.Audio;
 	}
-	public override SensorType Name { get; protected set; }
-	public override SensorExecutionResult Activate(IranAgent agent)
+	public override SensorActiveResult Activate()
 	{
-		throw new NotImplementedException();
+		return new SensorActiveResult
+		{
+			Type = Type,
+			WasBroken = IsBroken
+		};
 	}
 }

@@ -2,7 +2,6 @@ using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Entities.Sensors.InterrogationSensors;
 using SensorGame.Domain.Entities.Sensors.TrackingSensors;
 using SensorGame.Domain.Enum;
-using SensorGame.Domain.Interfaces;
 namespace SensorGame.Domain.Entities;
 
 public static class SensorFactory
@@ -11,16 +10,6 @@ public static class SensorFactory
 	private static readonly SensorType[] TrackingTypes = [SensorType.Audio, SensorType.Pulse, SensorType.Thermal];
 	private static readonly SensorType[] InterrogationTypes = [SensorType.Motion, SensorType.Signal, SensorType.Magnetic, SensorType.Light];
 
-	public static TrackingSensor[] CreateRandomWeaknessSensors(int count)
-	{
-		var sensors = new TrackingSensor[count];
-		for (var i = 0; i < count; i++)
-		{
-			var type = TrackingTypes[Random.Next(0, TrackingTypes.Length)];
-			sensors[i] = CreateTrackingSensorByType(type);
-		}
-		return sensors;
-	}
 	private static TrackingSensor CreateTrackingSensorByType(SensorType type)
 	{
 		switch (type)
@@ -32,7 +21,7 @@ public static class SensorFactory
 			case SensorType.Thermal:
 				return new ThermalSensor();
 			default:
-				throw new ArgumentException("Invalid sensor type");
+				throw new ArgumentException("Invalid Sensor type");
 		}
 	}
 
@@ -49,13 +38,13 @@ public static class SensorFactory
 			case SensorType.Light:
 				return new LightSensor();
 			default:
-				throw new ArgumentException("Invalid sensor type");
+				throw new ArgumentException("Invalid Sensor type");
 		}
 	}
-	public static Isensor CreateSensorByType(SensorType type)
+	public static Sensor CreateSensorByType(SensorType type)
 	{
 		if (TrackingTypes.Contains(type)) return CreateTrackingSensorByType(type);
 		if (InterrogationTypes.Contains(type)) return CreateInterrogationSensorByType(type);
-		throw new ArgumentException("Invalid sensor type");
+		throw new ArgumentException("Invalid Sensor type");
 	}
 }

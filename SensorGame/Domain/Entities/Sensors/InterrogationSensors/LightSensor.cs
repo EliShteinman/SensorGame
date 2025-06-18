@@ -6,10 +6,10 @@ public class LightSensor : InterrogationSensor
 {
 	public LightSensor()
 	{
-		Name = SensorType.Light;
+		IsBroken = false;
+		Type = SensorType.Light;
 	}
-	public override SensorType Name { get; protected set; }
-	public override SensorExecutionResult Activate(IranAgent agent)
+	public override SensorActiveResult Activate()
 	{
 		throw new NotImplementedException();
 	}

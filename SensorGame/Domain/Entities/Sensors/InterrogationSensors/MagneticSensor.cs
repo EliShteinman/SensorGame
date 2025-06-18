@@ -6,10 +6,11 @@ public class MagneticSensor : InterrogationSensor
 {
 	public MagneticSensor()
 	{
-		Name = SensorType.Magnetic;
+		IsBroken = false;
+		Type = SensorType.Magnetic;
 	}
-	public override SensorType Name { get; protected set; }
-	public override SensorExecutionResult Activate(IranAgent agent)
+
+	public override SensorActiveResult Activate()
 	{
 		throw new NotImplementedException();
 	}

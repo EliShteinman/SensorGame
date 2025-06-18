@@ -1,4 +1,3 @@
-using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Enum;
 using SensorGame.Domain.Models;
 namespace SensorGame.Domain.Entities.IranAgents;
@@ -6,7 +5,7 @@ namespace SensorGame.Domain.Entities.IranAgents;
 public class SeniorCommanderAgent : IranAgent
 {
 	public SeniorCommanderAgent()
-			: base(SensorFactory.CreateRandomWeaknessSensors(6))
+			: base(WeaknessesFactory.CreateRandomWeakness(6))
 	{
 	}
 	public override AgentRank Rank => AgentRank.SeniorCommander;

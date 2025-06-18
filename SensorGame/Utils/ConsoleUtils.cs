@@ -29,7 +29,8 @@ public static class ConsoleUtils
 		{
 			WriteLine(promptText);
 			code = Console.ReadLine();
-		} while (string.IsNullOrWhiteSpace(code));
+		}
+		while (string.IsNullOrWhiteSpace(code));
 		return code;
 	}
 	public static void WriteLine(string text)

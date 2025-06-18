@@ -1,15 +1,15 @@
 ﻿using SensorGame.Domain.Entities;
 using SensorGame.Domain.Enum;
-using SensorGame.Domain.Interfaces;
+using SensorGame.Utils;
 namespace SensorGame;
 
 class Program
 {
 	private static void Main()
 	{
-		var numberOfTeachings = 0;
 		while (true)
 		{
+			var numberOfTeachings = 0;
 			var agent = AgentFactory.CreateAgentByType(AgentRank.FootSoldier);
 			while (!agent.IsExposed)
 			{
@@ -18,15 +18,15 @@ class Program
 				{
 					case AgentRank.FootSoldier:
 						var prompt = """
-						             Choose a sensor from the list.
+						             Choose a Sensor from the list.
 						             1. Audio.
 						             2. Pulse.
 						             3. Thermal.
 						             4. Exit.
 						             """;
-						var min = 1; 
+						var min = 1;
 						var max = 4;
-						var inputSensor = Utils.ConsoleUtils.GetChoice(prompt, min, max);
+						var inputSensor = ConsoleUtils.GetChoice(prompt, min, max);
 						SensorType sensorType;
 						switch (inputSensor)
 						{
@@ -44,11 +44,11 @@ class Program
 							default:
 								throw new ArgumentOutOfRangeException();
 						}
-						Console.WriteLine("Choose a location");
+						ConsoleUtils.WriteLine("Choose a location");
 						var location = int.Parse(Console.ReadLine());
 						var sensor = SensorFactory.CreateSensorByType(sensorType);
-						agent.AttachSensor(sensor, location);
-						
+						var count = agent.AttachSensor(sensor, location);
+						ConsoleUtils.WriteLine($"Sensor exposed {count} times.");
 						break;
 					case AgentRank.SquadLeader:
 						break;
@@ -60,6 +60,7 @@ class Program
 						throw new ArgumentOutOfRangeException();
 				}
 			}
+			ConsoleUtils.WriteLine($"Agent {agent.Rank} exposed {numberOfTeachings} times.");
 		}
 	}
 }
