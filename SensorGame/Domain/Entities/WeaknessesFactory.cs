@@ -8,7 +8,7 @@ public static class WeaknessesFactory
 		SensorType.Audio, 
 		SensorType.Pulse, 
 		SensorType.Thermal, 
-		SensorType.Motion
+		SensorType.Magnetic
 	];
 
 	public static SensorType[] CreateRandomWeakness(int count)

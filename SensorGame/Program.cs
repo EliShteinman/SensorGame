@@ -21,11 +21,12 @@ class Program
 						             1. Audio.
 						             2. Pulse.
 						             3. Thermal.
-						             4. Motion.
+						             4. Magnatic.
 						             5. Exit.
 						             """;
 						var min = 1;
 						var max = 5;
+						ConsoleUtils.Clear();
 						var inputSensor = ConsoleUtils.GetChoice(prompt, min, max);
 						SensorType sensorType;
 						switch (inputSensor)
@@ -40,7 +41,7 @@ class Program
 								sensorType = SensorType.Thermal;
 								break;
 							case 4:
-								sensorType = SensorType.Motion;
+								sensorType = SensorType.Magnetic;
 								break;
 							case 5:
 								return;
@@ -58,8 +59,11 @@ class Program
 							Rank = {result.AgentRank} 
 							Exposed {result.CorrectMatches}
 							From {result.TotalWeaknesses} weaknesses.
+							
+							Press any key to continue.
 							"""
 						);
+						Console.ReadKey(true);
 						break;
 					case AgentRank.SquadLeader:
 						break;
