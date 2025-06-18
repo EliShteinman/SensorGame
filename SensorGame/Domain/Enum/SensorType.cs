@@ -6,7 +6,7 @@ public enum SensorType
 	Pulse,
 	Thermal,
 	Motion,
-	Signal,
-	Magnetic,
-	Light
+	Signal, // לא חולשה
+	Magnetic, // לא חולשה
+	Light // לא חולשה
 }

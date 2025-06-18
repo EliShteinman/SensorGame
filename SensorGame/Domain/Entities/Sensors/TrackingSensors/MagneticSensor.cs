@@ -2,16 +2,21 @@ using SensorGame.Domain.Enum;
 using SensorGame.Domain.Models;
 namespace SensorGame.Domain.Entities.Sensors.TrackingSensors;
 
-public class AudioSensor : TrackingSensor
+public class MagneticSensor : TrackingSensor
 {
-	public AudioSensor()
+	public MagneticSensor()
 	{
 		IsBroken = false;
-		Type = SensorType.Audio;
+		Type = SensorType.Magnetic;
 	}
+
 	public override SensorActiveResult Activate()
 	{
 		countActive++;
+		if (countActive > 3)
+		{
+			IsBroken = true;
+		}
 		return new SensorActiveResult
 		{
 			Type = Type,

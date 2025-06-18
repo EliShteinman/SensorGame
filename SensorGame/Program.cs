@@ -13,7 +13,6 @@ class Program
 			var agent = AgentFactory.CreateAgentByType(AgentRank.FootSoldier);
 			while (!agent.IsExposed)
 			{
-				numberOfTeachings++;
 				switch (agent.Rank)
 				{
 					case AgentRank.FootSoldier:
@@ -22,10 +21,11 @@ class Program
 						             1. Audio.
 						             2. Pulse.
 						             3. Thermal.
-						             4. Exit.
+						             4. Motion.
+						             5. Exit.
 						             """;
 						var min = 1;
-						var max = 4;
+						var max = 5;
 						var inputSensor = ConsoleUtils.GetChoice(prompt, min, max);
 						SensorType sensorType;
 						switch (inputSensor)
@@ -40,15 +40,26 @@ class Program
 								sensorType = SensorType.Thermal;
 								break;
 							case 4:
+								sensorType = SensorType.Motion;
+								break;
+							case 5:
 								return;
 							default:
 								throw new ArgumentOutOfRangeException();
 						}
-						ConsoleUtils.WriteLine("Choose a location");
-						var location = int.Parse(Console.ReadLine());
+						var promptLocation = "Choose a location";
+						var minLocation = 0;
+						var maxLocation = 1;
+						var location = ConsoleUtils.GetChoice(promptLocation, minLocation, maxLocation);
 						var sensor = SensorFactory.CreateSensorByType(sensorType);
-						var count = agent.AttachSensor(sensor, location);
-						ConsoleUtils.WriteLine($"Sensor exposed {count} times.");
+						var result = agent.AttachSensor(sensor, location);
+						ConsoleUtils.WriteLine(
+							$"""
+							Rank = {result.AgentRank} 
+							Exposed {result.CorrectMatches}
+							From {result.TotalWeaknesses} weaknesses.
+							"""
+						);
 						break;
 					case AgentRank.SquadLeader:
 						break;
@@ -59,6 +70,7 @@ class Program
 					default:
 						throw new ArgumentOutOfRangeException();
 				}
+				numberOfTeachings++;
 			}
 			ConsoleUtils.WriteLine($"Agent {agent.Rank} exposed {numberOfTeachings} times.");
 		}

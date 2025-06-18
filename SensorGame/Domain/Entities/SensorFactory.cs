@@ -7,13 +7,15 @@ namespace SensorGame.Domain.Entities;
 public static class SensorFactory
 {
 	private static readonly Random Random = new();
-	private static readonly SensorType[] TrackingTypes = [SensorType.Audio, SensorType.Pulse, SensorType.Thermal];
-	private static readonly SensorType[] InterrogationTypes = [SensorType.Motion, SensorType.Signal, SensorType.Magnetic, SensorType.Light];
+	private static readonly SensorType[] TrackingTypes = [SensorType.Audio, SensorType.Pulse, SensorType.Thermal, SensorType.Magnetic];
+	private static readonly SensorType[] InterrogationTypes = [SensorType.Motion, SensorType.Signal, SensorType.Light];
 
 	private static TrackingSensor CreateTrackingSensorByType(SensorType type)
 	{
 		switch (type)
 		{
+			case SensorType.Magnetic:
+				return new MagneticSensor();
 			case SensorType.Audio:
 				return new AudioSensor();
 			case SensorType.Pulse:
@@ -33,8 +35,6 @@ public static class SensorFactory
 				return new MotionSensor();
 			case SensorType.Signal:
 				return new SignalSensor();
-			case SensorType.Magnetic:
-				return new MagneticSensor();
 			case SensorType.Light:
 				return new LightSensor();
 			default:

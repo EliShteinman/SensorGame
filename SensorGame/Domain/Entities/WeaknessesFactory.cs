@@ -4,7 +4,12 @@ namespace SensorGame.Domain.Entities;
 public static class WeaknessesFactory
 {
 	private static readonly Random Random = new();
-	private static readonly SensorType[] TrackingTypes = [SensorType.Audio, SensorType.Pulse, SensorType.Thermal];
+	private static readonly SensorType[] TrackingTypes = [
+		SensorType.Audio, 
+		SensorType.Pulse, 
+		SensorType.Thermal, 
+		SensorType.Motion
+	];
 
 	public static SensorType[] CreateRandomWeakness(int count)
 	{

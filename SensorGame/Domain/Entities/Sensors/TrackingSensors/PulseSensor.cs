@@ -11,6 +11,16 @@ public class PulseSensor : TrackingSensor
 	}
 	public override SensorActiveResult Activate()
 	{
-		throw new NotImplementedException();
+		countActive++;
+		if (countActive > 3)
+		{
+			IsBroken = true;
+		}
+		return new SensorActiveResult
+		{
+			Type = Type,
+			WasBroken = IsBroken,
+			ActivationCount = countActive
+		};
 	}
 }
