@@ -6,11 +6,21 @@ public class PulseSensor : TrackingSensor
 {
 	public PulseSensor()
 	{
-		Name = SensorType.Pulse;
+		IsBroken = false;
+		Type = SensorType.Pulse;
 	}
-	public override SensorType Name { get; protected set; }
-	public override SensorExecutionResult Activate(IranAgent agent)
+	public override SensorActiveResult Activate()
 	{
-		throw new NotImplementedException();
+		countActive++;
+		if (countActive > 3)
+		{
+			IsBroken = true;
+		}
+		return new SensorActiveResult
+		{
+			Type = Type,
+			WasBroken = IsBroken,
+			ActivationCount = countActive
+		};
 	}
 }

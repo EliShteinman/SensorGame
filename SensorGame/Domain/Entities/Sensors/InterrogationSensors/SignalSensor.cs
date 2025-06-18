@@ -6,10 +6,11 @@ public class SignalSensor : InterrogationSensor
 {
 	public SignalSensor()
 	{
-		Name = SensorType.Signal;
+		IsBroken = false;
+		Type = SensorType.Signal;
 	}
-	public override SensorType Name { get; protected set; }
-	public override SensorExecutionResult Activate(IranAgent agent)
+
+	public override SensorActiveResult Activate()
 	{
 		throw new NotImplementedException();
 	}

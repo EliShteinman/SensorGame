@@ -6,11 +6,17 @@ public class ThermalSensor : TrackingSensor
 {
 	public ThermalSensor()
 	{
-		Name = SensorType.Thermal;
+		IsBroken = false;
+		Type = SensorType.Thermal;
 	}
-	public override SensorType Name { get; protected set; }
-	public override SensorExecutionResult Activate(IranAgent agent)
+	public override SensorActiveResult Activate()
 	{
-		throw new NotImplementedException();
+		countActive++;
+		return new SensorActiveResult
+		{
+			Type = Type,
+			WasBroken = IsBroken,
+			ActivationCount = countActive
+		};
 	}
 }

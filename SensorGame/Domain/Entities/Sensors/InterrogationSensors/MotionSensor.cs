@@ -6,10 +6,11 @@ public class MotionSensor : InterrogationSensor
 {
 	public MotionSensor()
 	{
-		Name = SensorType.Motion;
+		IsBroken = false;
+		Type = SensorType.Motion;
 	}
-	public override SensorType Name { get; protected set; }
-	public override SensorExecutionResult Activate(IranAgent agent)
+
+	public override SensorActiveResult Activate()
 	{
 		throw new NotImplementedException();
 	}
