@@ -45,7 +45,7 @@ public static class SeniorCommander
 		}
 		const string promptLocation = "Choose a location";
 		const int minLocation = 0;
-		const int maxLocation = 1;
+		const int maxLocation = 6;
 		var location = ConsoleUtils.GetChoice(promptLocation, minLocation, maxLocation);
 		var sensor = SensorFactory.CreateSensorByType(sensorType);
 		var result = agent.AttachSensor(sensor, location);
