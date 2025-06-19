@@ -19,7 +19,7 @@ public static class SquadLeader
 		const int minSensors = 1;
 		const int maxSensors = 6;
 		ConsoleUtils.Clear();
-		var inputSensor = ConsoleUtils.GetChoice(promptSensors, maxSensors, maxSensors);
+		var inputSensor = ConsoleUtils.GetChoice(promptSensors, minSensors, maxSensors);
 		SensorType sensorType;
 		switch (inputSensor)
 		{
