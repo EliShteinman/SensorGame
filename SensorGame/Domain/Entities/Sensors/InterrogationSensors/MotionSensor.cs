@@ -12,6 +12,16 @@ public class MotionSensor : InterrogationSensor
 
 	public override SensorActiveResult Activate()
 	{
-		throw new NotImplementedException();
+		CountActive++;
+		if (CountActive > 2)
+		{
+			IsBroken = true;
+		}
+		return new SensorActiveResult
+		{
+			Type = Type,
+			WasBroken = IsBroken,
+			ActivationCount = CountActive
+		};
 	}
 }

@@ -1,26 +1,25 @@
-using SensorGame.Domain.Enum;
 using SensorGame.Domain.Entities;
+using SensorGame.Domain.Enum;
 using SensorGame.Utils;
-
 namespace SensorGame.Logic;
 
-public class SeniorCommander
+public static class SeniorCommander
 {
 	public static void Run(IranAgent agent)
 	{
-		var prompt = """
-		             Choose a Sensor from the list.
-		             1. Audio.
-		             2. Pulse.
-		             3. Thermal.
-		             4. Magnatic.
-		             5. Motion
-		             6. Exit.
-		             """;
-		var min = 1;
-		var max = 6;
+		const string promptSensors = """
+		                             Choose a Sensor from the list.
+		                             1. Audio.
+		                             2. Pulse.
+		                             3. Thermal.
+		                             4. Magnetic.
+		                             5. Motion
+		                             6. Exit.
+		                             """;
+		const int minSensors = 1;
+		const int maxSensors = 6;
 		ConsoleUtils.Clear();
-		var inputSensor = ConsoleUtils.GetChoice(prompt, min, max);
+		var inputSensor = ConsoleUtils.GetChoice(promptSensors, minSensors, maxSensors);
 		SensorType sensorType;
 		switch (inputSensor)
 		{
@@ -44,9 +43,9 @@ public class SeniorCommander
 			default:
 				throw new ArgumentOutOfRangeException();
 		}
-		var promptLocation = "Choose a location";
-		var minLocation = 0;
-		var maxLocation = 1;
+		const string promptLocation = "Choose a location";
+		const int minLocation = 0;
+		const int maxLocation = 1;
 		var location = ConsoleUtils.GetChoice(promptLocation, minLocation, maxLocation);
 		var sensor = SensorFactory.CreateSensorByType(sensorType);
 		var result = agent.AttachSensor(sensor, location);

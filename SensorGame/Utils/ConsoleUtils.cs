@@ -24,7 +24,7 @@ public static class ConsoleUtils
 
 	public static string PromptForCode(string promptText)
 	{
-		string code;
+		string? code;
 		do
 		{
 			WriteLine(promptText);

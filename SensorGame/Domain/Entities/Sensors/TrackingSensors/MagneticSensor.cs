@@ -12,8 +12,8 @@ public class MagneticSensor : TrackingSensor
 
 	public override SensorActiveResult Activate()
 	{
-		countActive++;
-		if (countActive > 3)
+		CountActive++;
+		if (CountActive > 3)
 		{
 			IsBroken = true;
 		}
@@ -21,7 +21,7 @@ public class MagneticSensor : TrackingSensor
 		{
 			Type = Type,
 			WasBroken = IsBroken,
-			ActivationCount = countActive
+			ActivationCount = CountActive
 		};
 	}
 }

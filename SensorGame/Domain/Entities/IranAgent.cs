@@ -1,33 +1,33 @@
-using SensorGame.Domain.Entities.Sensors;
 using SensorGame.Domain.Enum;
 using SensorGame.Domain.Models;
 namespace SensorGame.Domain.Entities;
 
 public abstract class IranAgent
 {
-	protected readonly Sensor[] AttachedSensors;
-	protected readonly SensorType[] Weaknesses;
+	private readonly SensorType[] _weaknesses;
+	protected readonly Sensor?[] AttachedSensors;
 
 	protected IranAgent(SensorType[] weaknesses)
 	{
-		Weaknesses = weaknesses;
-		AttachedSensors = new Sensor[weaknesses.Length];
+		_weaknesses = weaknesses;
+		AttachedSensors = new Sensor?[weaknesses.Length];
 		IsExposed = false;
 	}
 	public abstract AgentRank Rank { get; }
-	public bool IsExposed { get; protected set; }
+	public bool IsExposed { get; private set; }
 	protected abstract InvestigationAggregateResult Investigate();
-	
+
 	protected List<SensorActiveResult> CollectSensorResults()
 	{
 		var results = new List<SensorActiveResult>();
 		for (var i = 0; i < AttachedSensors.Length; i++)
 		{
-			if (AttachedSensors[i] == null)
+			var sensor = AttachedSensors[i];
+			if (sensor == null)
 			{
 				continue;
 			}
-			var result = AttachedSensors[i].Activate();
+			var result = sensor.Activate();
 			result.SlotIndex = i;
 			results.Add(result);
 		}
@@ -36,7 +36,7 @@ public abstract class IranAgent
 	protected InvestigationAggregateResult AnalyzeSensorResults(List<SensorActiveResult> toAnalyze)
 	{
 		var brokenCount = 0;
-		var copyWeaknesses = Weaknesses.ToList();
+		var copyWeaknesses = _weaknesses.ToList();
 		foreach (var result in toAnalyze)
 		{
 			if (result.WasBroken)
@@ -47,19 +47,19 @@ public abstract class IranAgent
 			{
 				copyWeaknesses.Remove(result.Type);
 			}
-		}	
-		IsExposed = (copyWeaknesses.Count == 0);
+		}
+		IsExposed = copyWeaknesses.Count == 0;
 		return new InvestigationAggregateResult
 		{
 			AgentRank = Rank,
-			CorrectMatches = (Weaknesses.Length - copyWeaknesses.Count),
-			TotalWeaknesses = Weaknesses.Length,
+			CorrectMatches = _weaknesses.Length - copyWeaknesses.Count,
+			TotalWeaknesses = _weaknesses.Length,
 			InternalSensorResults = toAnalyze,
 			BrokenCount = brokenCount
 		};
 	}
 
-public virtual InvestigationAggregateResult AttachSensor(Sensor sensor, int location)
+	public virtual InvestigationAggregateResult AttachSensor(Sensor sensor, int location)
 	{
 		if (location < 0 || location >= AttachedSensors.Length)
 		{

@@ -4,8 +4,13 @@ namespace SensorGame.Domain.Entities.IranAgents;
 
 public class SquadLeaderAgent : IranAgent
 {
-	private readonly Random Random = new();
-	private int CounterOfInvestigations = 0;
+	private readonly Random _random = new();
+	private int _counterOfInvestigations;
+	public SquadLeaderAgent()
+			: base(WeaknessesFactory.CreateRandomWeakness(4))
+	{
+	}
+	public override AgentRank Rank => AgentRank.SquadLeader;
 	private void TryRemoveRandomSensors(int count, List<SensorActiveResult> result)
 	{
 		foreach (var sensorActiveResult in result)
@@ -17,9 +22,9 @@ public class SquadLeaderAgent : IranAgent
 		}
 		for (var i = 0; i < count; i++)
 		{
-			var removed = Random.Next(0, AttachedSensors.Length);
+			var removed = _random.Next(0, AttachedSensors.Length);
 			AttachedSensors[removed] = null;
-			SensorActiveResult toDelete = null;
+			SensorActiveResult? toDelete = null;
 			foreach (var sensorActiveResult in result)
 			{
 				if (sensorActiveResult.SlotIndex == removed)
@@ -34,17 +39,12 @@ public class SquadLeaderAgent : IranAgent
 			}
 		}
 	}
-	public SquadLeaderAgent()
-			: base(WeaknessesFactory.CreateRandomWeakness(4))
-	{
-	}
-	public override AgentRank Rank => AgentRank.SquadLeader;
 
 	protected override InvestigationAggregateResult Investigate()
 	{
 		var result = CollectSensorResults();
-		CounterOfInvestigations++;
-		if (CounterOfInvestigations % 3 == 0)
+		_counterOfInvestigations++;
+		if (_counterOfInvestigations % 3 == 0)
 		{
 			TryRemoveRandomSensors(1, result);
 		}

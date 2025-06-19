@@ -11,12 +11,12 @@ public class ThermalSensor : TrackingSensor
 	}
 	public override SensorActiveResult Activate()
 	{
-		countActive++;
+		CountActive++;
 		return new SensorActiveResult
 		{
 			Type = Type,
 			WasBroken = IsBroken,
-			ActivationCount = countActive
+			ActivationCount = CountActive
 		};
 	}
 }

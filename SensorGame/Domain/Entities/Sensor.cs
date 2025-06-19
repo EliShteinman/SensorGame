@@ -4,7 +4,7 @@ namespace SensorGame.Domain.Entities;
 
 public abstract class Sensor
 {
-	protected SensorType Type;
 	protected bool IsBroken;
+	protected SensorType Type;
 	public abstract SensorActiveResult Activate();
 }

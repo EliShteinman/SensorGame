@@ -4,23 +4,23 @@ using SensorGame.Logic;
 using SensorGame.Utils;
 namespace SensorGame;
 
-class Program
+static class Program
 {
 	private static void Main()
 	{
 		while (true)
 		{
 			var numberOfTeachings = 0;
-			var promptSoldier = """
-			                    Choose an agent type to investigate:
-			                    1.	Foot Soldier
-			                    2.	Squad Leader
-			                    3.	Senior Commander
-			                    4.	[Not available] Organization Leader
-			                    5.	Exit
-			                    """;
-			var minSoldier = 1;
-			var maxSoldier = 5;
+			const string promptSoldier = """
+			                             Choose an agent type to investigate:
+			                             1.	Foot Soldier
+			                             2.	Squad Leader
+			                             3.	Senior Commander
+			                             4.	[Not available] Organization Leader
+			                             5.	Exit
+			                             """;
+			const int minSoldier = 1;
+			const int maxSoldier = 5;
 			var inputSoldier = ConsoleUtils.GetChoice(promptSoldier, minSoldier, maxSoldier);
 			AgentRank rank;
 			switch (inputSoldier)

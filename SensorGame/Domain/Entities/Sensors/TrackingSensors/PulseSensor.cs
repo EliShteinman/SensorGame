@@ -11,8 +11,8 @@ public class PulseSensor : TrackingSensor
 	}
 	public override SensorActiveResult Activate()
 	{
-		countActive++;
-		if (countActive > 3)
+		CountActive++;
+		if (CountActive > 3)
 		{
 			IsBroken = true;
 		}
@@ -20,7 +20,7 @@ public class PulseSensor : TrackingSensor
 		{
 			Type = Type,
 			WasBroken = IsBroken,
-			ActivationCount = countActive
+			ActivationCount = CountActive
 		};
 	}
 }
