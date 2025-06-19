@@ -15,7 +15,7 @@ public class SeniorCommanderAgent : IranAgent
 	{
 		foreach (var sensorActiveResult in result)
 		{
-			if (sensorActiveResult.Type == SensorType.Magnetic)
+			if (sensorActiveResult.Type == SensorType.Magnetic && !sensorActiveResult.WasBroken)
 			{
 				return;
 			}

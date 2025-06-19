@@ -1,8 +1,8 @@
 using SensorGame.Domain.Enum;
 using SensorGame.Domain.Models;
-namespace SensorGame.Domain.Entities.Sensors.TrackingSensors;
+namespace SensorGame.Domain.Entities.Sensors.InterrogationSensors;
 
-public class MagneticSensor : TrackingSensor
+public class MagneticSensor : InterrogationSensor
 {
 	public MagneticSensor()
 	{
@@ -13,7 +13,7 @@ public class MagneticSensor : TrackingSensor
 	public override SensorActiveResult Activate()
 	{
 		CountActive++;
-		if (CountActive > 3)
+		if (CountActive > 2)
 		{
 			IsBroken = true;
 		}

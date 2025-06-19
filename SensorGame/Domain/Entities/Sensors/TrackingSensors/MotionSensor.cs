@@ -1,8 +1,8 @@
 using SensorGame.Domain.Enum;
 using SensorGame.Domain.Models;
-namespace SensorGame.Domain.Entities.Sensors.InterrogationSensors;
+namespace SensorGame.Domain.Entities.Sensors.TrackingSensors;
 
-public class MotionSensor : InterrogationSensor
+public class MotionSensor : TrackingSensor
 {
 	public MotionSensor()
 	{
@@ -13,7 +13,7 @@ public class MotionSensor : InterrogationSensor
 	public override SensorActiveResult Activate()
 	{
 		CountActive++;
-		if (CountActive > 2)
+		if (CountActive > 3)
 		{
 			IsBroken = true;
 		}
